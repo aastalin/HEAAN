@@ -38,19 +38,20 @@ endif
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all: libHEAAN.a
+all: libHEAAN.so
 
 # Tool invocations
-libHEAAN.a: $(OBJS) $(USER_OBJS)
+libHEAAN.so: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC Archiver'
-	ar -r  "libHEAAN.a" $(OBJS) $(USER_OBJS) $(LIBS)
+	gcc -shared -o libHEAAN.so $(OBJS) $(USER_OBJS) $(LIBS)
+	#ar -r  "libHEAAN.a" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(CC_DEPS)$(C++_DEPS)$(ARCHIVES)$(C_UPPER_DEPS)$(CXX_DEPS)$(OBJS)$(CPP_DEPS)$(C_DEPS) libHEAAN.a
+	-$(RM) $(CC_DEPS)$(C++_DEPS)$(ARCHIVES)$(C_UPPER_DEPS)$(CXX_DEPS)$(OBJS)$(CPP_DEPS)$(C_DEPS) libHEAAN.so
 	-@echo ' '
 
 .PHONY: all clean dependents
