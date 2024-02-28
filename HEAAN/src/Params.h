@@ -17,7 +17,7 @@ static const long logQ = 800; // 128-bit security
 
 static const double sigma = 3.2;
 static const long h = 64;
-static const long pbnd = 59.0;
+static const long pbnd = 49.0;
 static const long kbar = pbnd + 1;
 static const long kbar2 = 2 * kbar;
 static const long logNh = (logN - 1);

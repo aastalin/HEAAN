@@ -201,7 +201,9 @@ void RingMultiplier::reconstruct(ZZ* x, uint64_t* rx, long np, const ZZ& q) {
 }
 
 void RingMultiplier::mult(ZZ* x, ZZ* a, ZZ* b, long np, const ZZ& mod) {
-        ZZ_p::init(mod);
+        ZZ p;
+        RandomLen(p, N);
+        ZZ_p::init(p);
 
         ZZ_pX aaa(N);
         ZZ_pX bbb(N);
