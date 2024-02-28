@@ -9,6 +9,7 @@
 #include "RingMultiplier.h"
 
 #include <NTL/BasicThreadPool.h>
+#include <NTL/ZZ_pX.h>
 #include <NTL/tools.h>
 #include <cmath>
 #include <cstdlib>
@@ -200,6 +201,17 @@ void RingMultiplier::reconstruct(ZZ* x, uint64_t* rx, long np, const ZZ& q) {
 }
 
 void RingMultiplier::mult(ZZ* x, ZZ* a, ZZ* b, long np, const ZZ& mod) {
+        ZZ_p::init(mod);
+
+        ZZ_pX aaa(N);
+        ZZ_pX bbb(N);
+        ZZ_pX ccc(N);
+
+        for( long i=0; i<np; i++) {
+            mul(ccc, aaa, bbb);
+        }
+
+	/*
 	uint64_t* ra = new uint64_t[np << logN]();
 	uint64_t* rb = new uint64_t[np << logN]();
 	uint64_t* rx = new uint64_t[np << logN]();
@@ -230,9 +242,22 @@ void RingMultiplier::mult(ZZ* x, ZZ* a, ZZ* b, long np, const ZZ& mod) {
 	delete[] ra;
 	delete[] rb;
 	delete[] rx;
+	*/
 }
 
 void RingMultiplier::multNTT(ZZ* x, ZZ* a, uint64_t* rb, long np, const ZZ& mod) {
+        ZZ p;
+	RandomLen(p, N);
+        ZZ_p::init(p);
+
+        ZZ_pX aaa(N);
+        ZZ_pX bbb(N);
+        ZZ_pX ccc(N);
+
+        for( long i=0; i<np; i++) {
+            mul(ccc, aaa, bbb);
+        }
+	/*
 	uint64_t* ra = new uint64_t[np << logN]();
 	uint64_t* rx = new uint64_t[np << logN]();
 	NTL_EXEC_RANGE(np, first, last);
@@ -258,6 +283,8 @@ void RingMultiplier::multNTT(ZZ* x, ZZ* a, uint64_t* rb, long np, const ZZ& mod)
 
 	delete[] ra;
 	delete[] rx;
+	*/
+//for( long i=0; i<N; i++ ) x[i] = ccc.rep.elts()[i].LoopHole();
 }
 
 void RingMultiplier::multDNTT(ZZ* x, uint64_t* ra, uint64_t* rb, long np, const ZZ& mod) {
